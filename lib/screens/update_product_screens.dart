@@ -5,6 +5,24 @@ class UpdateProductScreens extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    AppBar _buildHeader() {
+      return AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+        ),
+      );
+    }
+
+    return Scaffold(
+      appBar: _buildHeader(),
+    );
   }
 }

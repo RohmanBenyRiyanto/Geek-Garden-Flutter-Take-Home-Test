@@ -14,7 +14,7 @@ class CardOurProductEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: displayWidth(context),
+      width: displayWidth(context) - 48,
       height: 150,
       padding: EdgeInsets.only(
         left: defaultHorizontal14,
@@ -22,7 +22,7 @@ class CardOurProductEmpty extends StatelessWidget {
         bottom: defaultHorizontal14,
       ),
       margin: EdgeInsets.only(
-        left: defaultMargin,
+        left: defaultHorizontal16,
       ),
       decoration: BoxDecoration(
         gradient: primaryGradient,

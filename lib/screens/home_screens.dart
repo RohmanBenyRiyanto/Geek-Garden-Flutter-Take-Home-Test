@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_home_test/routes/routes_name.dart';
 import 'package:flutter_home_test/themes/color.dart';
 import 'package:flutter_home_test/themes/fontstyle.dart';
 import 'package:flutter_home_test/themes/margin.dart';
 import 'package:flutter_home_test/themes/responsive.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
+import '../components/buttons/button_small.dart';
+import '../components/cards/card_api_product.dart';
+import '../components/cards/card_our_product.dart';
 import '../components/cards/card_our_product_empty.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,18 +53,19 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: defaultHorizontal12,
             ),
-            Container(
-              height: 40,
-              width: 40,
-              padding: EdgeInsets.all(defaultHorizontal12),
-              decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.circular(defaultRadius),
-                boxShadow: defaultCardShadow,
-              ),
-              child: InkWell(
-                hoverColor: primaryColor.withAlpha(50),
-                onTap: () {},
+            InkWell(
+              onTap: () {
+                Get.toNamed(RoutesName.updateProduct);
+              },
+              child: Container(
+                height: 40,
+                width: 40,
+                padding: EdgeInsets.all(defaultHorizontal12),
+                decoration: BoxDecoration(
+                  color: whiteColor,
+                  borderRadius: BorderRadius.circular(defaultRadius),
+                  boxShadow: defaultCardShadow,
+                ),
                 child: SvgPicture.asset(
                   'assets/svg/ic_add.svg',
                   fit: BoxFit.scaleDown,
@@ -103,140 +109,54 @@ class HomeScreen extends StatelessWidget {
                 return Padding(
                   padding: EdgeInsets.only(
                     right: index == 4 ? defaultMargin : 0.0,
+                    left: index == 0 ? defaultHorizontal8 : 0.0,
                   ),
-                  child: Container(
-                    width: displayWidth(context),
-                    height: 150,
-                    // padding: EdgeInsets.only(
-                    //   left: defaultHorizontal14,
-                    //   top: defaultHorizontal14,
-                    //   bottom: defaultHorizontal14,
-                    // ),
-                    margin: EdgeInsets.only(
-                      left: defaultMargin,
-                    ),
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                      border: Border.fromBorderSide(
-                        BorderSide(
-                          width: 1.5,
-                          color: greyTwoColor,
-                        ),
-                      ),
-                      borderRadius: BorderRadius.circular(defaultRadius),
-                      boxShadow: defaultCardShadow,
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 120.0,
-                          height: 150.0,
-                          decoration: BoxDecoration(
-                            color: greyThreeColor,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(defaultRadius),
-                              bottomLeft: Radius.circular(defaultRadius),
-                            ),
-                          ),
-                          child: SizedBox(
-                            height: 150.0,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(defaultRadius),
-                                bottomLeft: Radius.circular(defaultRadius),
-                              ),
-                              child: Image.network(
-                                'https://cf.shopee.co.id/file/c3f610df6ad1a92b2df242772fdb660b',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: defaultHorizontal12,
-                              right: defaultHorizontal14,
-                              top: defaultHorizontal14,
-                              bottom: defaultHorizontal14,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5',
-                                  style: blackTextStyle.copyWith(
-                                    fontSize: 16.0,
-                                    fontWeight: bold,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(
-                                  height: defaultVertical6,
-                                ),
-                                Text(
-                                  'Man\'s T-Shirt',
-                                  style: primaryTextStyle.copyWith(
-                                    fontSize: 14.0,
-                                    fontWeight: semiBold,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(
-                                  height: defaultVertical6,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'Rp. 100.000',
-                                        style: blackTextStyle.copyWith(
-                                          fontSize: 18.0,
-                                          fontWeight: bold,
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: defaultHorizontal6,
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: defaultHorizontal12,
-                                        vertical: defaultVertical6,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: blackColor,
-                                        borderRadius: BorderRadius.circular(
-                                            defaultRadius),
-                                      ),
-                                      child: Text(
-                                        'View Details',
-                                        style: whiteTextStyle.copyWith(
-                                          fontSize: 14.0,
-                                          fontWeight: semiBold,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  child: CardOurProduct(),
                 );
               },
             ),
+          ),
+        ],
+      );
+    }
+
+    Widget _buildFakeStoreApiProduct() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: defaultHorizontal16,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: defaultHorizontal24,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Fake Store Api Product',
+                  style: blackTextStyle.copyWith(
+                    fontSize: 18,
+                    fontWeight: bold,
+                  ),
+                ),
+                Text(
+                  'Limit 10',
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 12,
+                    fontWeight: medium,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: defaultVertical12,
+          ),
+          CardApiProduct(),
+          SizedBox(
+            height: defaultHorizontal24,
           ),
         ],
       );
@@ -249,6 +169,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           _buildHeader(),
           _buildOurProduct(),
+          _buildFakeStoreApiProduct(),
         ],
       );
     }
