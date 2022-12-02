@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 import '../components/cards/card_api_product.dart';
 import '../components/cards/card_our_product.dart';
+import '../view_models/product_api_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productController = Get.find<ProductViewModels>();
+    final productApiController = Get.find<ProductApiViewModel>();
 
     Widget _buildHeader() {
       return Container(
@@ -131,7 +133,8 @@ class HomeScreen extends StatelessWidget {
                         child: CardOurProduct(
                           id: productController.productList[index].id,
                           name: productController.productList[index].title,
-                          price: productController.productList[index].price,
+                          price: productController.productList[index].price
+                              .toString(),
                           category:
                               productController.productList[index].category,
                           description:
@@ -190,7 +193,47 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: defaultVertical12,
           ),
-          CardApiProduct(),
+          GetX<ProductApiViewModel>(
+            init: ProductApiViewModel(),
+            initState: (_) {
+              productApiController.getProductApi();
+            },
+            builder: (_) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: defaultMargin,
+                ),
+                child: GridView.count(
+                  childAspectRatio: 0.7,
+                  crossAxisCount: getOrientation(context) == 0 ? 4 : 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  children: List.generate(
+                    productApiController.productApiList.length,
+                    (index) {
+                      return CardApiProduct(
+                        // id: productApiController.productApiList[index].id.to,
+                        name: productApiController.productApiList[index].title
+                            .toString(),
+                        price: productApiController.productApiList[index].price
+                            .toString(),
+                        category: productApiController
+                            .productApiList[index].category
+                            .toString(),
+                        description: productApiController
+                            .productApiList[index].description
+                            .toString(),
+                        images: productApiController.productApiList[index].image
+                            .toString(),
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
           SizedBox(
             height: defaultHorizontal24,
           ),

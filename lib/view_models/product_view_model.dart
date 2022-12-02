@@ -3,9 +3,7 @@ import 'package:flutter_home_test/models/product_models.dart';
 import 'package:get/get.dart';
 
 class ProductViewModels extends GetxController {
-  //List product
   RxList<ProductModel> productList = <ProductModel>[].obs;
-  // var iteproductListms = [].obs;
 
   @override
   void onInit() {
@@ -17,19 +15,10 @@ class ProductViewModels extends GetxController {
     super.onClose();
   }
 
-  //validator
-  String? validator(String? value) {
-    if (value!.isEmpty) {
-      return 'Name is required';
-    }
-    return null;
-  }
-
-  //add product
   void addProduct(
     int id,
     String name,
-    String price,
+    double price,
     String description,
     String category,
     String image,
@@ -44,7 +33,6 @@ class ProductViewModels extends GetxController {
         image: image,
       ),
     );
-    Get.back();
   }
 
   void updateProductItem(int index, ProductModel product) {

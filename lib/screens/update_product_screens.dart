@@ -5,7 +5,6 @@ import 'package:flutter_home_test/view_models/update_view_model.dart';
 import 'package:get/get.dart';
 
 import '../components/buttons/button_primary.dart';
-import '../components/buttons/button_secondary.dart';
 import '../themes/color.dart';
 import '../themes/fontstyle.dart';
 import '../themes/margin.dart';
@@ -82,15 +81,70 @@ class UpdateProductScreens extends StatelessWidget {
       );
     }
 
+    Widget _buildAction() {
+      return Column(
+        children: [
+          ButtonPrimary(
+            onPressed: () {
+              if (args['isAdd'] == true) {
+                updateController.submitUpdate(
+                  productController.addProduct(
+                    productController.productList.length + 1,
+                    updateController.nameProductController.text,
+
+                    double.parse(updateController.priceProductController.text),
+                    // updateController.priceProductController.text,
+                    updateController.descriptionProductController.text,
+                    updateController.categoryProductController.text,
+                    updateController.imageProductController.text,
+                  ),
+                );
+              } else {
+                productController.updateProductItem(
+                  productIndex,
+                  ProductModel(
+                    id: product.id,
+                    title: updateController.nameProductController.text.isEmpty
+                        ? product.title
+                        : updateController.nameProductController.text,
+                    price: updateController.priceProductController.text.isEmpty
+                        ? product.price
+                        : double.parse(
+                            updateController.priceProductController.text),
+                    description: updateController
+                            .descriptionProductController.text.isEmpty
+                        ? product.description
+                        : updateController.descriptionProductController.text,
+                    category:
+                        updateController.categoryProductController.text.isEmpty
+                            ? product.category
+                            : updateController.categoryProductController.text,
+                    image: updateController.imageProductController.text.isEmpty
+                        ? product.image
+                        : updateController.imageProductController.text,
+                  ),
+                );
+              }
+            },
+            tittle: args['isAdd'] == true ? "Save Product" : "Update Product",
+          ),
+        ],
+      );
+    }
+
     Widget _buildForm() {
       return Form(
         key: updateController.updateFormKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
             TextFormField(
               controller: updateController.nameProductController,
               validator: (value) {
-                updateController.validator(value);
+                return updateController.nameValidate(value!);
+              },
+              onSaved: (val) {
+                updateController.nameProductC = val!;
               },
               decoration: InputDecoration(
                 labelText:
@@ -124,11 +178,15 @@ class UpdateProductScreens extends StatelessWidget {
             TextFormField(
               controller: updateController.priceProductController,
               validator: (value) {
-                updateController.validator(value);
+                return updateController.priceValidate(value!);
+              },
+              onSaved: (val) {
+                updateController.priceProductC = val!;
               },
               decoration: InputDecoration(
-                labelText:
-                    args['isAdd'] == false ? product.price : 'Product Price',
+                labelText: args['isAdd'] == false
+                    ? product.price.toString()
+                    : 'Product Price',
                 labelStyle: blackTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
@@ -158,7 +216,10 @@ class UpdateProductScreens extends StatelessWidget {
             TextFormField(
               controller: updateController.categoryProductController,
               validator: (value) {
-                updateController.validator(value);
+                return updateController.categoryValidate(value!);
+              },
+              onSaved: (val) {
+                updateController.categoryProductC = val!;
               },
               decoration: InputDecoration(
                 labelText: args['isAdd'] == false
@@ -193,7 +254,10 @@ class UpdateProductScreens extends StatelessWidget {
             TextFormField(
               controller: updateController.imageProductController,
               validator: (value) {
-                updateController.validator(value);
+                return updateController.imageValidate(value!);
+              },
+              onSaved: (val) {
+                updateController.imageProductC = val!;
               },
               decoration: InputDecoration(
                 labelText:
@@ -227,7 +291,10 @@ class UpdateProductScreens extends StatelessWidget {
             TextFormField(
               controller: updateController.descriptionProductController,
               validator: (value) {
-                updateController.validator(value);
+                return updateController.descriptionValidate(value!);
+              },
+              onSaved: (val) {
+                updateController.descriptionProductC = val!;
               },
               maxLines: 3,
               decoration: InputDecoration(
@@ -260,63 +327,12 @@ class UpdateProductScreens extends StatelessWidget {
             SizedBox(
               height: defaultVertical24,
             ),
+            _buildAction(),
+            SizedBox(
+              height: defaultVertical24,
+            ),
           ],
         ),
-      );
-    }
-
-    Widget _buildAction() {
-      return Column(
-        children: [
-          ButtonPrimary(
-            onPressed: () {
-              args['isAdd'] == true
-                  ? productController.addProduct(
-                      productController.productList.length + 1,
-                      updateController.nameProductController.text,
-                      updateController.priceProductController.text,
-                      updateController.descriptionProductController.text,
-                      updateController.categoryProductController.text,
-                      updateController.imageProductController.text,
-                    )
-                  : productController.updateProductItem(
-                      productIndex,
-                      ProductModel(
-                        id: product.id,
-                        title:
-                            updateController.nameProductController.text.isEmpty
-                                ? product.title
-                                : updateController.nameProductController.text,
-                        price:
-                            updateController.priceProductController.text.isEmpty
-                                ? product.price
-                                : updateController.priceProductController.text,
-                        description: updateController
-                                .descriptionProductController.text.isEmpty
-                            ? product.price
-                            : updateController
-                                .descriptionProductController.text,
-                        category: updateController
-                                .categoryProductController.text.isEmpty
-                            ? product.category
-                            : updateController.categoryProductController.text,
-                        image:
-                            updateController.imageProductController.text.isEmpty
-                                ? product.image
-                                : updateController.imageProductController.text,
-                      ),
-                    );
-            },
-            tittle: "Save Product",
-          ),
-          SizedBox(
-            height: defaultVertical24,
-          ),
-          ButtonSecondary(
-            onPressed: () {},
-            tittle: "Clear Form",
-          ),
-        ],
       );
     }
 
@@ -331,7 +347,6 @@ class UpdateProductScreens extends StatelessWidget {
           children: [
             _buildHeading(),
             _buildForm(),
-            _buildAction(),
           ],
         ),
       );
