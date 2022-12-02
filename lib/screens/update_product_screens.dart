@@ -54,8 +54,10 @@ class UpdateProductScreens extends StatelessWidget {
                   },
                   splashColor: transparentColor,
                   highlightColor: transparentColor,
-                  icon: const Icon(Icons.delete_outline_rounded,
-                      color: Colors.red),
+                  icon: const Icon(
+                    Icons.delete_outline_rounded,
+                    color: Colors.red,
+                  ),
                 )
               : const SizedBox(),
         ],

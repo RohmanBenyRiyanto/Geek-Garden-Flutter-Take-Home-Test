@@ -47,7 +47,6 @@ class ProductViewModels extends GetxController {
     Get.back();
   }
 
-  //update product
   void updateProductItem(int index, ProductModel product) {
     productList[index] = product;
     Get.back();
@@ -55,6 +54,7 @@ class ProductViewModels extends GetxController {
 
   void deleteProductItem(int index) {
     productList.removeAt(index);
+    productList.refresh();
     Get.back();
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../routes/routes_name.dart';
 import '../../themes/color.dart';
 import '../../themes/fontstyle.dart';
 import '../../themes/margin.dart';
