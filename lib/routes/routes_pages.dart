@@ -1,3 +1,4 @@
+import 'package:flutter_home_test/routes/routes_binding.dart';
 import 'package:get/get.dart';
 
 import '../screens/detail_product_screens.dart';
@@ -13,21 +14,27 @@ class RoutesPages {
       name: RoutesName.splashScreen,
       page: () => SplashScreen(),
       transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
       name: RoutesName.homeScreen,
-      page: () => const HomeScreen(),
+      page: () => HomeScreen(),
       transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+      binding: HomeBinding(),
     ),
     GetPage(
       name: RoutesName.detailProduct,
       page: () => const DetailProductScreen(),
       transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
       name: RoutesName.updateProduct,
-      page: () => const UpdateProductScreens(),
+      page: () => UpdateProductScreens(),
       transition: Transition.fade,
+      transitionDuration: const Duration(milliseconds: 500),
+      binding: UpdateBinding(),
     ),
   ];
 }

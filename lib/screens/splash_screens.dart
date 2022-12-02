@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
-  final splashController = Get.put(SplashScreenViewModel());
+  final splashController = Get.find<SplashScreenViewModel>();
   @override
   Widget build(BuildContext context) {
     Widget _buildContentPotrait() {

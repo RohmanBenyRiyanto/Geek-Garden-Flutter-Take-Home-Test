@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../themes/color.dart';
 import '../../themes/fontstyle.dart';
 import '../../themes/margin.dart';
+import '../../themes/responsive.dart';
 
 class CardApiProduct extends StatelessWidget {
   const CardApiProduct({
@@ -17,7 +18,7 @@ class CardApiProduct extends StatelessWidget {
       ),
       child: GridView.count(
         childAspectRatio: 0.7,
-        crossAxisCount: 2,
+        crossAxisCount: getOrientation(context) == 0 ? 4 : 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10,
         shrinkWrap: true,
@@ -94,8 +95,8 @@ class CardApiProduct extends StatelessWidget {
                   ),
                   Text(
                     'Rp. 100.000',
-                    style: blackTextStyle.copyWith(
-                        fontSize: 18, fontWeight: bold),
+                    style:
+                        blackTextStyle.copyWith(fontSize: 18, fontWeight: bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

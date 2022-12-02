@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_home_test/components/cards/card_our_product_empty.dart';
 import 'package:flutter_home_test/routes/routes_name.dart';
 import 'package:flutter_home_test/themes/color.dart';
 import 'package:flutter_home_test/themes/fontstyle.dart';
 import 'package:flutter_home_test/themes/margin.dart';
 import 'package:flutter_home_test/themes/responsive.dart';
+import 'package:flutter_home_test/view_models/product_view_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../components/buttons/button_small.dart';
 import '../components/cards/card_api_product.dart';
 import '../components/cards/card_our_product.dart';
-import '../components/cards/card_our_product_empty.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final productController = Get.find<ProductViewModels>();
+
     Widget _buildHeader() {
       return Container(
         padding: EdgeInsets.all(
@@ -24,11 +26,16 @@ class HomeScreen extends StatelessWidget {
         ),
         width: displayWidth(context),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: getOrientation(context) == 0
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Column(
+                crossAxisAlignment: getOrientation(context) == 0
+                    ? CrossAxisAlignment.center
+                    : CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Discover our exclusive products',
@@ -100,21 +107,34 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(
             height: 150,
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    right: index == 4 ? defaultMargin : 0.0,
-                    left: index == 0 ? defaultHorizontal8 : 0.0,
-                  ),
-                  child: CardOurProduct(),
-                );
-              },
-            ),
+            child: Obx(() => productController.productList.isEmpty
+                ? const CardOurProductEmpty()
+                : ListView.builder(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: productController.productList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          right:
+                              index == productController.productList.length - 1
+                                  ? defaultHorizontal24
+                                  : 0,
+                          left: index == 0 ? defaultHorizontal8 : 0.0,
+                        ),
+                        child: CardOurProduct(
+                          name: productController.productList[index].title,
+                          price: productController.productList[index].price,
+                          category:
+                              productController.productList[index].category,
+                          description:
+                              productController.productList[index].description,
+                          images: productController.productList[index].image,
+                        ),
+                      );
+                    },
+                  )),
           ),
         ],
       );

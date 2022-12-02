@@ -7,14 +7,27 @@ import '../../themes/responsive.dart';
 import '../buttons/button_small.dart';
 
 class CardOurProduct extends StatelessWidget {
-  const CardOurProduct({
+  CardOurProduct({
     Key? key,
+    required this.name,
+    required this.price,
+    required this.category,
+    required this.description,
+    required this.images,
   }) : super(key: key);
+
+  final String name;
+  final String price;
+  final String category;
+  final String description;
+  final String images;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: displayWidth(context) - 48,
+      width: getOrientation(context) == 0
+          ? displayWidth(context) * 0.5
+          : displayWidth(context) - 48,
       height: 150,
       margin: EdgeInsets.only(
         left: defaultHorizontal16,
@@ -52,7 +65,7 @@ class CardOurProduct extends StatelessWidget {
                   bottomLeft: Radius.circular(defaultRadius),
                 ),
                 child: Image.network(
-                  'https://cf.shopee.co.id/file/c3f610df6ad1a92b2df242772fdb660b',
+                  images,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -71,7 +84,7 @@ class CardOurProduct extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5',
+                    name,
                     style: blackTextStyle.copyWith(
                       fontSize: 16.0,
                       fontWeight: bold,
@@ -83,7 +96,7 @@ class CardOurProduct extends StatelessWidget {
                     height: defaultVertical6,
                   ),
                   Text(
-                    'Man\'s T-Shirt',
+                    category,
                     style: primaryTextStyle.copyWith(
                       fontSize: 14.0,
                       fontWeight: semiBold,
@@ -100,7 +113,7 @@ class CardOurProduct extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Rp. 100.000',
+                          price,
                           style: blackTextStyle.copyWith(
                             fontSize: 18.0,
                             fontWeight: bold,
@@ -114,6 +127,7 @@ class CardOurProduct extends StatelessWidget {
                       ),
                       ButtonSmall(
                         onPressed: () {},
+                        tittle: 'Edit Product',
                       )
                     ],
                   ),
