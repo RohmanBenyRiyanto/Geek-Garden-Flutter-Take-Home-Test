@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_home_test/models/product_models.dart';
 import 'package:flutter_home_test/view_models/product_view_model.dart';
 import 'package:flutter_home_test/view_models/update_view_model.dart';
 import 'package:get/get.dart';
@@ -10,12 +11,19 @@ import '../themes/fontstyle.dart';
 import '../themes/margin.dart';
 
 class UpdateProductScreens extends StatelessWidget {
-  UpdateProductScreens({Key? key}) : super(key: key);
+  const UpdateProductScreens({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final updateController = Get.find<UpdateViewModels>();
     final productController = Get.find<ProductViewModels>();
+
+    final args = Get.arguments;
+
+    final ProductModel product = args['product'];
+
+    final int productIndex = args['index'];
+
     AppBar _buildHeader() {
       return AppBar(
         backgroundColor: backgroundColor,
@@ -33,11 +41,24 @@ class UpdateProductScreens extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          'Add Product',
+          args['isAdd'] == true ? 'Add Product' : 'Update Product',
           style: blackTextStyle.copyWith(
             fontWeight: semiBold,
           ),
         ),
+        actions: [
+          args['isAdd'] == false
+              ? IconButton(
+                  onPressed: () {
+                    productController.deleteProductItem(productIndex);
+                  },
+                  splashColor: transparentColor,
+                  highlightColor: transparentColor,
+                  icon: const Icon(Icons.delete_outline_rounded,
+                      color: Colors.red),
+                )
+              : const SizedBox(),
+        ],
       );
     }
 
@@ -70,12 +91,15 @@ class UpdateProductScreens extends StatelessWidget {
                 updateController.validator(value);
               },
               decoration: InputDecoration(
-                labelText: 'Product Name',
+                labelText:
+                    args['isAdd'] == false ? product.title : 'Product Name',
                 labelStyle: blackTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
                 ),
-                hintText: 'Enter your product name',
+                hintText: args['isAdd'] == false
+                    ? 'Enter your new name'
+                    : 'Enter your product name',
                 hintStyle: subtitleTwoTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
@@ -101,12 +125,15 @@ class UpdateProductScreens extends StatelessWidget {
                 updateController.validator(value);
               },
               decoration: InputDecoration(
-                labelText: 'Product Price',
+                labelText:
+                    args['isAdd'] == false ? product.price : 'Product Price',
                 labelStyle: blackTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
                 ),
-                hintText: 'Enter your product price',
+                hintText: args['isAdd'] == false
+                    ? 'Enter your new price'
+                    : 'Enter your product price',
                 hintStyle: subtitleTwoTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
@@ -132,12 +159,16 @@ class UpdateProductScreens extends StatelessWidget {
                 updateController.validator(value);
               },
               decoration: InputDecoration(
-                labelText: 'Product Category',
+                labelText: args['isAdd'] == false
+                    ? product.category
+                    : 'Product Category',
                 labelStyle: blackTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
                 ),
-                hintText: 'Enter your product category',
+                hintText: args['isAdd'] == false
+                    ? 'Enter your new category'
+                    : 'Enter your product category',
                 hintStyle: subtitleTwoTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
@@ -163,12 +194,15 @@ class UpdateProductScreens extends StatelessWidget {
                 updateController.validator(value);
               },
               decoration: InputDecoration(
-                labelText: 'Product Image',
+                labelText:
+                    args['isAdd'] == false ? product.image : 'Product Image',
                 labelStyle: blackTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
                 ),
-                hintText: 'Enter your link/url product image',
+                hintText: args['isAdd'] == false
+                    ? 'Enter your new URL image'
+                    : 'Enter your link/url product image',
                 hintStyle: subtitleTwoTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
@@ -193,16 +227,31 @@ class UpdateProductScreens extends StatelessWidget {
               validator: (value) {
                 updateController.validator(value);
               },
+              maxLines: 3,
               decoration: InputDecoration(
-                labelText: 'Product Description',
+                labelText: args['isAdd'] == false
+                    ? product.description
+                    : 'Product Description',
                 labelStyle: blackTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
                 ),
-                hintText: 'Enter your product description',
+                hintText: args['isAdd'] == false
+                    ? 'Enter your new description'
+                    : 'Enter your product description',
                 hintStyle: subtitleTwoTextStyle.copyWith(
                   fontSize: 14.0,
                   fontWeight: regular,
+                ),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: greyTwoColor,
+                  ),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: blackColor,
+                  ),
                 ),
               ),
             ),
@@ -219,14 +268,42 @@ class UpdateProductScreens extends StatelessWidget {
         children: [
           ButtonPrimary(
             onPressed: () {
-              productController.addProduct(
-                productController.productList.length + 1,
-                updateController.nameProductController.text,
-                updateController.priceProductController.text,
-                updateController.descriptionProductController.text,
-                updateController.categoryProductController.text,
-                updateController.imageProductController.text,
-              );
+              args['isAdd'] == true
+                  ? productController.addProduct(
+                      productController.productList.length + 1,
+                      updateController.nameProductController.text,
+                      updateController.priceProductController.text,
+                      updateController.descriptionProductController.text,
+                      updateController.categoryProductController.text,
+                      updateController.imageProductController.text,
+                    )
+                  : productController.updateProductItem(
+                      productIndex,
+                      ProductModel(
+                        id: product.id,
+                        title:
+                            updateController.nameProductController.text.isEmpty
+                                ? product.title
+                                : updateController.nameProductController.text,
+                        price:
+                            updateController.priceProductController.text.isEmpty
+                                ? product.price
+                                : updateController.priceProductController.text,
+                        description: updateController
+                                .descriptionProductController.text.isEmpty
+                            ? product.price
+                            : updateController
+                                .descriptionProductController.text,
+                        category: updateController
+                                .categoryProductController.text.isEmpty
+                            ? product.category
+                            : updateController.categoryProductController.text,
+                        image:
+                            updateController.imageProductController.text.isEmpty
+                                ? product.image
+                                : updateController.imageProductController.text,
+                      ),
+                    );
             },
             tittle: "Save Product",
           ),

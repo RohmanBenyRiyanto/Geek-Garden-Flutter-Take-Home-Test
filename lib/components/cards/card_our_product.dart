@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../routes/routes_name.dart';
 import '../../themes/color.dart';
 import '../../themes/fontstyle.dart';
 import '../../themes/margin.dart';
@@ -7,20 +9,25 @@ import '../../themes/responsive.dart';
 import '../buttons/button_small.dart';
 
 class CardOurProduct extends StatelessWidget {
-  CardOurProduct({
+  const CardOurProduct({
     Key? key,
+    required this.id,
     required this.name,
     required this.price,
     required this.category,
     required this.description,
     required this.images,
+    required this.onPressed,
   }) : super(key: key);
 
+  final int id;
   final String name;
   final String price;
   final String category;
   final String description;
   final String images;
+
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +133,8 @@ class CardOurProduct extends StatelessWidget {
                         width: defaultHorizontal6,
                       ),
                       ButtonSmall(
-                        onPressed: () {},
-                        tittle: 'Edit Product',
+                        onPressed: onPressed as void Function(),
+                        tittle: 'Update Product',
                       )
                     ],
                   ),

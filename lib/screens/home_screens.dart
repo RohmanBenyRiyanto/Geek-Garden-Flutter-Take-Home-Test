@@ -62,7 +62,12 @@ class HomeScreen extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Get.toNamed(RoutesName.updateProduct);
+                Get.toNamed(
+                  RoutesName.updateProduct,
+                  arguments: {
+                    'isAdd': true,
+                  },
+                );
               },
               child: Container(
                 height: 40,
@@ -124,6 +129,7 @@ class HomeScreen extends StatelessWidget {
                           left: index == 0 ? defaultHorizontal8 : 0.0,
                         ),
                         child: CardOurProduct(
+                          id: productController.productList[index].id,
                           name: productController.productList[index].title,
                           price: productController.productList[index].price,
                           category:
@@ -131,6 +137,16 @@ class HomeScreen extends StatelessWidget {
                           description:
                               productController.productList[index].description,
                           images: productController.productList[index].image,
+                          onPressed: () {
+                            Get.toNamed(
+                              RoutesName.updateProduct,
+                              arguments: {
+                                'isAdd': false,
+                                'product': productController.productList[index],
+                                'index': index,
+                              },
+                            );
+                          },
                         ),
                       );
                     },

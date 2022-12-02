@@ -18,12 +18,7 @@ class UpdateViewModels extends GetxController {
     return null;
   }
 
-  //update product
-  void updateProduct() {
-    if (updateFormKey.currentState!.validate()) {
-      Get.back();
-    }
-  }
+
 
   @override
   void onInit() {

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class ProductViewModels extends GetxController {
   //List product
   RxList<ProductModel> productList = <ProductModel>[].obs;
+  // var iteproductListms = [].obs;
 
   @override
   void onInit() {
@@ -43,10 +44,17 @@ class ProductViewModels extends GetxController {
         image: image,
       ),
     );
-    print(productList);
+    Get.back();
+  }
+
+  //update product
+  void updateProductItem(int index, ProductModel product) {
+    productList[index] = product;
+    Get.back();
+  }
+
+  void deleteProductItem(int index) {
+    productList.removeAt(index);
     Get.back();
   }
 }
-
-  //get list product
-
