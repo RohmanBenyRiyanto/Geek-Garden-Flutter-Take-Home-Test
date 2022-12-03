@@ -28,7 +28,4 @@ class Services {
       return e.response?.data ?? e.message;
     }
   }
-
-  //get<list<ProductApiModel>>
-
 }

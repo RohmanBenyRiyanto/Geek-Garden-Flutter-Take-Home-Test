@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../utils/color.dart';
@@ -69,8 +71,8 @@ class CardOurProduct extends StatelessWidget {
                   topLeft: Radius.circular(defaultRadius),
                   bottomLeft: Radius.circular(defaultRadius),
                 ),
-                child: Image.network(
-                  images,
+                child: Image.file(
+                  File(images),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -118,9 +120,9 @@ class CardOurProduct extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          price,
+                          'Rp. $price',
                           style: blackTextStyle.copyWith(
-                            fontSize: 18.0,
+                            fontSize: 16.0,
                             fontWeight: bold,
                           ),
                           maxLines: 1,
@@ -132,7 +134,7 @@ class CardOurProduct extends StatelessWidget {
                       ),
                       ButtonSmall(
                         onPressed: onPressed as void Function(),
-                        tittle: 'Update Product',
+                        tittle: 'Edit',
                       )
                     ],
                   ),

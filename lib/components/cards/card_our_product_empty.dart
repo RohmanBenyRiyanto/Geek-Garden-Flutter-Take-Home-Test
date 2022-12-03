@@ -21,8 +21,8 @@ class CardOurProductEmpty extends StatelessWidget {
         top: defaultHorizontal14,
         bottom: defaultHorizontal14,
       ),
-      margin: EdgeInsets.only(
-        left: defaultHorizontal16,
+      margin: EdgeInsets.symmetric(
+        horizontal: defaultMargin,
       ),
       decoration: BoxDecoration(
         gradient: primaryGradient,
@@ -59,8 +59,8 @@ class CardOurProductEmpty extends StatelessWidget {
               ],
             ),
           ),
-          LottieBuilder.network(
-            'https://lottie.host/7cbb17d8-4a7e-42ab-849f-7f4bf0d773fe/93DK7mFzAW.json',
+          LottieBuilder.asset(
+            'assets/lottie/data_error_2.json'
           ),
         ],
       ),

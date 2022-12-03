@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_home_test/models/product_models.dart';
 import 'package:flutter_home_test/view_models/product_view_model.dart';
 import 'package:flutter_home_test/view_models/update_view_model.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../components/buttons/button_primary.dart';
 import '../utils/color.dart';
 import '../utils/fontstyle.dart';
 import '../utils/margin.dart';
+import '../view_models/pick_file_view_model.dart';
 
 class UpdateProductScreens extends StatelessWidget {
   const UpdateProductScreens({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class UpdateProductScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     final updateController = Get.find<UpdateViewModels>();
     final productController = Get.find<ProductViewModels>();
+    final pickFileController = Get.find<PickFileViewModel>();
 
     final args = Get.arguments;
 
@@ -89,14 +92,16 @@ class UpdateProductScreens extends StatelessWidget {
               if (args['isAdd'] == true) {
                 updateController.submitUpdate(
                   productController.addProduct(
-                    productController.productList.length + 1,
-                    updateController.nameProductController.text,
-
-                    double.parse(updateController.priceProductController.text),
-                    // updateController.priceProductController.text,
-                    updateController.descriptionProductController.text,
-                    updateController.categoryProductController.text,
-                    updateController.imageProductController.text,
+                    ProductModel(
+                      id: productController.productList.length + 1,
+                      title: updateController.nameProductController.text,
+                      price: updateController.priceProductController.text,
+                      description:
+                          updateController.descriptionProductController.text,
+                      category: updateController.categoryProductController.text,
+                      nameImage: pickFileController.nameFile.toString(),
+                      pathImage: pickFileController.pathFile.toString(),
+                    ),
                   ),
                 );
               } else {
@@ -104,24 +109,31 @@ class UpdateProductScreens extends StatelessWidget {
                   productIndex,
                   ProductModel(
                     id: product.id,
+                    //when empty add from product
                     title: updateController.nameProductController.text.isEmpty
-                        ? product.title
+                        ? updateController.nameProductController.text =
+                            product.title
                         : updateController.nameProductController.text,
                     price: updateController.priceProductController.text.isEmpty
-                        ? product.price
-                        : double.parse(
-                            updateController.priceProductController.text),
+                        ? updateController.priceProductController.text =
+                            product.price
+                        : updateController.priceProductController.text,
                     description: updateController
                             .descriptionProductController.text.isEmpty
-                        ? product.description
+                        ? updateController.descriptionProductController.text =
+                            product.description
                         : updateController.descriptionProductController.text,
                     category:
                         updateController.categoryProductController.text.isEmpty
-                            ? product.category
+                            ? updateController.categoryProductController.text =
+                                product.category
                             : updateController.categoryProductController.text,
-                    image: updateController.imageProductController.text.isEmpty
-                        ? product.image
-                        : updateController.imageProductController.text,
+                    nameImage: pickFileController.nameFile.toString().isEmpty
+                        ? pickFileController.nameFile = product.nameImage
+                        : pickFileController.nameFile.toString(),
+                    pathImage: pickFileController.pathFile.toString().isEmpty
+                        ? pickFileController.pathFile = product.pathImage
+                        : pickFileController.pathFile.toString(),
                   ),
                 );
               }
@@ -141,7 +153,7 @@ class UpdateProductScreens extends StatelessWidget {
             TextFormField(
               controller: updateController.nameProductController,
               validator: (value) {
-                return updateController.nameValidate(value!);
+                return updateController.validator(value!);
               },
               onSaved: (val) {
                 updateController.nameProductC = val!;
@@ -178,11 +190,12 @@ class UpdateProductScreens extends StatelessWidget {
             TextFormField(
               controller: updateController.priceProductController,
               validator: (value) {
-                return updateController.priceValidate(value!);
+                return updateController.validator(value!);
               },
               onSaved: (val) {
                 updateController.priceProductC = val!;
               },
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: args['isAdd'] == false
                     ? product.price.toString()
@@ -216,7 +229,7 @@ class UpdateProductScreens extends StatelessWidget {
             TextFormField(
               controller: updateController.categoryProductController,
               validator: (value) {
-                return updateController.categoryValidate(value!);
+                return updateController.validator(value!);
               },
               onSaved: (val) {
                 updateController.categoryProductC = val!;
@@ -249,49 +262,86 @@ class UpdateProductScreens extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: defaultVertical6,
+              height: defaultVertical16,
             ),
-            TextFormField(
-              controller: updateController.imageProductController,
-              validator: (value) {
-                return updateController.imageValidate(value!);
+            GetBuilder<PickFileViewModel>(
+              init: PickFileViewModel(),
+              initState: (_) {},
+              builder: (_) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: defaultVertical16),
+                        decoration: BoxDecoration(
+                          color: backgroundColor,
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 1.0,
+                              color: greyTwoColor,
+                            ),
+                          ),
+                        ),
+                        child: args['isAdd'] == true
+                            ? Text(
+                                pickFileController.nameFile == ''
+                                    ? 'Chose your new image'
+                                    : pickFileController.nameFile.toString(),
+                                style: blackTextStyle.copyWith(
+                                  fontSize: 14.0,
+                                  fontWeight: regular,
+                                ),
+                              )
+                            : Text(
+                                pickFileController.nameFile != ''
+                                    ? pickFileController.nameFile.toString()
+                                    : product.nameImage.toString(),
+                                style: blackTextStyle.copyWith(
+                                  fontSize: 14.0,
+                                  fontWeight: regular,
+                                ),
+                              ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: defaultHorizontal16,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        pickFileController.pickFile();
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        padding: EdgeInsets.all(defaultHorizontal12),
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(defaultRadius),
+                          boxShadow: defaultCardShadow,
+                        ),
+                        child: SvgPicture.asset(
+                          args['isAdd'] == true
+                              ? pickFileController.nameFile == ''
+                                  ? 'assets/svg/ic_image_add.svg'
+                                  : 'assets/svg/ic_image.svg'
+                              : 'assets/svg/ic_image_edit.svg',
+                          fit: BoxFit.scaleDown,
+                          color: whiteColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
               },
-              onSaved: (val) {
-                updateController.imageProductC = val!;
-              },
-              decoration: InputDecoration(
-                labelText:
-                    args['isAdd'] == false ? product.image : 'Product Image',
-                labelStyle: blackTextStyle.copyWith(
-                  fontSize: 14.0,
-                  fontWeight: regular,
-                ),
-                hintText: args['isAdd'] == false
-                    ? 'Enter your new URL image'
-                    : 'Enter your link/url product image',
-                hintStyle: subtitleTwoTextStyle.copyWith(
-                  fontSize: 14.0,
-                  fontWeight: regular,
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: greyTwoColor,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: blackColor,
-                  ),
-                ),
-              ),
             ),
             SizedBox(
-              height: defaultVertical6,
+              height: defaultVertical16,
             ),
             TextFormField(
               controller: updateController.descriptionProductController,
               validator: (value) {
-                return updateController.descriptionValidate(value!);
+                return updateController.validator(value!);
               },
               onSaved: (val) {
                 updateController.descriptionProductC = val!;

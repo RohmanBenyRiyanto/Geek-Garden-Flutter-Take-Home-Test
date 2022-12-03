@@ -10,7 +10,7 @@ class ProductApiViewModel extends GetxController
 
   @override
   void onInit() {
-    change([], status: RxStatus.loading());
+    getProductApi();
     super.onInit();
   }
 

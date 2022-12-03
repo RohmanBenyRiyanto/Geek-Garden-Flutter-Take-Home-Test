@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_home_test/components/animations/shimmer_effect.dart';
 import 'package:flutter_home_test/components/cards/card_our_product_empty.dart';
 import 'package:flutter_home_test/routes/routes_name.dart';
 
 import 'package:flutter_home_test/view_models/product_view_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../components/cards/card_api_product.dart';
 import '../components/cards/card_our_product.dart';
@@ -15,7 +17,7 @@ import '../utils/responsive.dart';
 import '../view_models/product_api_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +142,8 @@ class HomeScreen extends StatelessWidget {
                               productController.productList[index].category,
                           description:
                               productController.productList[index].description,
-                          images: productController.productList[index].image,
+                          images:
+                              productController.productList[index].pathImage,
                           onPressed: () {
                             Get.toNamed(
                               RoutesName.updateProduct,
@@ -194,16 +197,44 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
             height: defaultVertical12,
           ),
-          GetX<ProductApiViewModel>(
-            init: ProductApiViewModel(),
-            initState: (_) {
-              productApiController.getProductApi();
-            },
-            builder: (_) {
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: defaultMargin,
+          productApiController.obx(
+            (state) => Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: defaultMargin,
+              ),
+              child: GridView.count(
+                childAspectRatio: 0.7,
+                crossAxisCount: getOrientation(context) == 0 ? 4 : 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                children: List.generate(
+                  productApiController.productApiList.length,
+                  (index) {
+                    return CardApiProduct(
+                      name: productApiController.productApiList[index].title
+                          .toString(),
+                      price: productApiController.productApiList[index].price
+                          .toString(),
+                      category: productApiController
+                          .productApiList[index].category
+                          .toString(),
+                      description: productApiController
+                          .productApiList[index].description
+                          .toString(),
+                      images: productApiController.productApiList[index].image
+                          .toString(),
+                    );
+                  },
                 ),
+              ),
+            ),
+            onLoading: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: defaultMargin,
+              ),
+              child: ShimmerEffect(
                 child: GridView.count(
                   childAspectRatio: 0.7,
                   crossAxisCount: getOrientation(context) == 0 ? 4 : 2,
@@ -212,28 +243,30 @@ class HomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   children: List.generate(
-                    productApiController.productApiList.length,
+                    2,
                     (index) {
-                      return CardApiProduct(
-                        // id: productApiController.productApiList[index].id.to,
-                        name: productApiController.productApiList[index].title
-                            .toString(),
-                        price: productApiController.productApiList[index].price
-                            .toString(),
-                        category: productApiController
-                            .productApiList[index].category
-                            .toString(),
-                        description: productApiController
-                            .productApiList[index].description
-                            .toString(),
-                        images: productApiController.productApiList[index].image
-                            .toString(),
+                      return const CardApiProduct(
+                        name: '',
+                        price: '',
+                        category: '',
+                        description: '',
+                        images: 'https://via.placeholder.com/150',
                       );
                     },
                   ),
                 ),
-              );
-            },
+              ),
+            ),
+            onError: (error) => Lottie.asset(
+              'assets/lottie/data_error.json',
+              width: displayWidth(context) * 0.5,
+              fit: BoxFit.fill,
+            ),
+            onEmpty: Lottie.asset(
+              'assets/lottie/data_empty.json',
+              width: displayWidth(context) * 0.5,
+              fit: BoxFit.fill,
+            ),
           ),
           SizedBox(
             height: defaultHorizontal24,

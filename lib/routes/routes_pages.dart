@@ -1,4 +1,3 @@
-import 'package:flutter_home_test/routes/routes_binding.dart';
 import 'package:get/get.dart';
 
 import '../screens/detail_product_screens.dart';
@@ -6,6 +5,7 @@ import '../screens/home_screens.dart';
 import '../screens/splash_screens.dart';
 import '../screens/update_product_screens.dart';
 
+import 'routes_binding.dart';
 import 'routes_name.dart';
 
 class RoutesPages {
@@ -15,6 +15,7 @@ class RoutesPages {
       page: () => SplashScreen(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
+      binding: SplashBinding(),
     ),
     GetPage(
       name: RoutesName.homeScreen,
