@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_home_test/models/product_models.dart';
-import 'package:flutter_home_test/view_models/product_view_model.dart';
-import 'package:flutter_home_test/view_models/update_view_model.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../components/buttons/button_primary.dart';
+import '../models/product_models.dart';
 import '../utils/color.dart';
 import '../utils/fontstyle.dart';
 import '../utils/margin.dart';
 import '../view_models/pick_file_view_model.dart';
+import '../view_models/product_view_model.dart';
+import '../view_models/update_view_model.dart';
 
 class UpdateProductScreens extends StatelessWidget {
   const UpdateProductScreens({Key? key}) : super(key: key);
@@ -52,7 +53,45 @@ class UpdateProductScreens extends StatelessWidget {
           args['isAdd'] == false
               ? IconButton(
                   onPressed: () {
-                    productController.deleteProductItem(productIndex);
+                    //Getx Dialog Confirmation
+                    Get.defaultDialog(
+                      title: 'Delete Product',
+                      middleText: 'Are you sure to delete this product?',
+                      textConfirm: 'Yes',
+                      textCancel: 'No',
+                      confirmTextColor: whiteColor,
+                      cancelTextColor: primaryColor,
+                      buttonColor: primaryColor,
+                      titleStyle: blackTextStyle.copyWith(
+                        fontWeight: bold,
+                      ),
+                      middleTextStyle: blackTextStyle.copyWith(
+                        fontSize: 14.0,
+                        fontWeight: regular,
+                      ),
+                      barrierDismissible: false,
+                      onConfirm: () {
+                        Get.back();
+                        productController.deleteProductItem(productIndex);
+                        Get.snackbar(
+                          'SUCCESS',
+                          '',
+                          messageText: Text(
+                            'Congratulation, our Product  has been deleted',
+                            style: blackTextStyle.copyWith(
+                              fontSize: 14,
+                              fontWeight: medium,
+                            ),
+                          ),
+                          backgroundColor: errorColor,
+                          colorText: blackColor,
+                          margin: EdgeInsets.all(defaultMargin),
+                          borderRadius: defaultRadius,
+                          duration: const Duration(seconds: 3),
+                        );
+                      },
+                      onCancel: () {},
+                    );
                   },
                   splashColor: transparentColor,
                   highlightColor: transparentColor,
@@ -104,6 +143,22 @@ class UpdateProductScreens extends StatelessWidget {
                     ),
                   ),
                 );
+                Get.snackbar(
+                  'SUCCESS',
+                  '',
+                  messageText: Text(
+                    'Congratulation, our Product  has been added',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 14,
+                      fontWeight: medium,
+                    ),
+                  ),
+                  borderColor: greyOneColor,
+                  borderWidth: 1.0,
+                  margin: EdgeInsets.all(defaultMargin),
+                  borderRadius: defaultRadius,
+                  duration: const Duration(seconds: 3),
+                );
               } else {
                 productController.updateProductItem(
                   productIndex,
@@ -135,6 +190,22 @@ class UpdateProductScreens extends StatelessWidget {
                         ? pickFileController.pathFile = product.pathImage
                         : pickFileController.pathFile.toString(),
                   ),
+                );
+                Get.snackbar(
+                  'SUCCESS',
+                  '',
+                  messageText: Text(
+                    'Congratulation, our Product  has been updated',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 14,
+                      fontWeight: medium,
+                    ),
+                  ),
+                  borderColor: greyOneColor,
+                  borderWidth: 1.0,
+                  margin: EdgeInsets.all(defaultMargin),
+                  borderRadius: defaultRadius,
+                  duration: const Duration(seconds: 3),
                 );
               }
             },

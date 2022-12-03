@@ -23,7 +23,6 @@ class UpdateViewModels extends GetxController with StateMixin<List<String>> {
     super.onInit();
   }
 
-
   @override
   void onClose() {
     nameProductController.dispose();

@@ -1,6 +1,7 @@
-import 'package:flutter_home_test/models/product_models.dart';
-import 'package:flutter_home_test/utils/color.dart';
 import 'package:get/get.dart';
+
+import '../models/product_models.dart';
+import '../utils/color.dart';
 
 class ProductViewModels extends GetxController
     with StateMixin<List<ProductModel?>> {

@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'color.dart';
 
-// Text Styles With Library Google Fonts
 TextStyle primaryTextStyle = GoogleFonts.poppins(
   color: primaryColor,
 );

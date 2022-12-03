@@ -6,16 +6,13 @@ class Services {
   static const String _baseUrl = 'https://fakestoreapi.com/';
 
   Services._internal() {
-    // ignore: prefer_conditional_assignment, unnecessary_null_comparison
-    if (_dio == null) {
-      _dio = Dio(
+    _dio ??= Dio(
         BaseOptions(
           baseUrl: _baseUrl,
           connectTimeout: 5000,
           receiveTimeout: 3000,
         ),
       );
-    }
   }
 
   factory Services() => Services._internal();

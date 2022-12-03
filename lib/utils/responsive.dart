@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-//Style Size Widget and Screen
 
 Size displaySize(BuildContext context) {
   debugPrint('Size = ${MediaQuery.of(context).size}');

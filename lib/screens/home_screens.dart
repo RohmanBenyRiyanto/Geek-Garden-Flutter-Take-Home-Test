@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_home_test/components/animations/shimmer_effect.dart';
-import 'package:flutter_home_test/components/cards/card_our_product_empty.dart';
-import 'package:flutter_home_test/routes/routes_name.dart';
 
-import 'package:flutter_home_test/view_models/product_view_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import '../components/animations/shimmer_effect.dart';
 import '../components/cards/card_api_product.dart';
 import '../components/cards/card_our_product.dart';
+import '../components/cards/card_our_product_empty.dart';
+import '../routes/routes_name.dart';
 import '../utils/color.dart';
 import '../utils/fontstyle.dart';
 import '../utils/margin.dart';
 import '../utils/responsive.dart';
 import '../view_models/product_api_view_model.dart';
+import '../view_models/product_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -174,24 +174,12 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               horizontal: defaultHorizontal24,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Fake Store Api Product',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 18,
-                    fontWeight: bold,
-                  ),
-                ),
-                Text(
-                  'Limit 10',
-                  style: primaryTextStyle.copyWith(
-                    fontSize: 12,
-                    fontWeight: medium,
-                  ),
-                ),
-              ],
+            child: Text(
+              'Fake Store Api Product',
+              style: blackTextStyle.copyWith(
+                fontSize: 18,
+                fontWeight: bold,
+              ),
             ),
           ),
           SizedBox(

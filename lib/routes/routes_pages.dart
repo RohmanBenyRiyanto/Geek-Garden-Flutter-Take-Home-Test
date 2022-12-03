@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import '../screens/detail_product_screens.dart';
 import '../screens/home_screens.dart';
 import '../screens/splash_screens.dart';
 import '../screens/update_product_screens.dart';
@@ -23,12 +22,6 @@ class RoutesPages {
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
       binding: HomeBinding(),
-    ),
-    GetPage(
-      name: RoutesName.detailProduct,
-      page: () => const DetailProductScreen(),
-      transition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 500),
     ),
     GetPage(
       name: RoutesName.updateProduct,

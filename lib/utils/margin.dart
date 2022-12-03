@@ -1,7 +1,4 @@
-//Style Margin And Margin
-
 double defaultMargin = 24.0;
-
 
 double defaultVertical4 = 4.0;
 double defaultVertical6 = 6.0;

@@ -25,7 +25,6 @@ class PickFileViewModel extends GetxController with StateMixin<List<String>> {
       nameFile = name;
       update(['image']);
     } else {
-      // User canceled the picker
       return null;
     }
     update();

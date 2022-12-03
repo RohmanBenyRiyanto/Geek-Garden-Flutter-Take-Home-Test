@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_home_test/models/product_api_model.dart';
+
 import 'package:get/get.dart';
 
 import '../models/api/product_api.dart';
+import '../models/product_api_model.dart';
 
 class ProductApiViewModel extends GetxController
     with StateMixin<List<ProductApiModel>> {

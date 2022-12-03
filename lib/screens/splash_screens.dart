@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_home_test/view_models/splash_screens_view_model.dart';
 import 'package:get/get.dart';
 
 import '../utils/color.dart';
 import '../utils/fontstyle.dart';
 import '../utils/margin.dart';
 import '../utils/responsive.dart';
+import '../view_models/splash_screens_view_model.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
