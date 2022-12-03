@@ -31,7 +31,7 @@ class RoutesPages {
     ),
     GetPage(
       name: RoutesName.updateProduct,
-      page: () => UpdateProductScreens(),
+      page: () => const UpdateProductScreens(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
       binding: UpdateBinding(),

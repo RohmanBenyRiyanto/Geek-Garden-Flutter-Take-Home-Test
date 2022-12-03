@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../themes/color.dart';
-import '../../themes/fontstyle.dart';
-import '../../themes/margin.dart';
-import '../../themes/responsive.dart';
+import '../../utils/color.dart';
+import '../../utils/fontstyle.dart';
+import '../../utils/margin.dart';
+import '../../utils/responsive.dart';
 
 class CardOurProductEmpty extends StatelessWidget {
   const CardOurProductEmpty({

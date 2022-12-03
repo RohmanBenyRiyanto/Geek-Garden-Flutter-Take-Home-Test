@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../themes/color.dart';
-import '../../themes/fontstyle.dart';
-import '../../themes/margin.dart';
+import '../../utils/color.dart';
+import '../../utils/fontstyle.dart';
+import '../../utils/margin.dart';
 
 class ButtonSmall extends StatelessWidget {
-  ButtonSmall({
+   ButtonSmall({
     Key? key,
     this.tittle,
     required this.onPressed,

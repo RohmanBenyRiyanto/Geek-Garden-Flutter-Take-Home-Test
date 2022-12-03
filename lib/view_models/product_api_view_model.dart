@@ -1,72 +1,34 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_home_test/models/product_api_model.dart';
-import 'package:flutter_home_test/services/test_service.dart';
 import 'package:get/get.dart';
 
-class ProductApiViewModel extends GetxController {
-  // ApiResponse<List<ProductModel>> _productApi =
-  //     ApiResponse(status: ApiStatus.success);
-  // ApiResponse<List<ProductModel>> get productApi => _productApi;
+import '../models/api/product_api.dart';
 
-  // RxList<ProductModel> productApiList = <ProductModel>[].obs;
-
-  // int? currentStatus;
-
-  // @override
-  // void onInit() {
-  //   getProductApi();
-  //   productApiList = productApi.data!.obs;
-  //   super.onInit();
-  // }
-
-  // void changeState(ApiResponse<List<ProductModel>>? state) {
-  //   if (state != null) {
-  //     _productApi = state;
-  //     update();
-  //   } else {
-  //     _productApi = ApiResponse(status: ApiStatus.error);
-  //     update();
-  //   }
-  //   update();
-  // }
-
-  // Future<ApiResponse<List<ProductModel>>> getProductApi() async {
-  //   try {
-  //     changeState(ApiResponse(status: ApiStatus.loading));
-  //     final res = await ProductApi.fetchProduct();
-  //     currentStatus = null;
-  //     changeState(ApiResponse(status: ApiStatus.success, data: res));
-  //   } catch (e) {
-  //     if (e is DioError) {
-  //       if (e.response?.data != null) {
-  //         changeState(ApiResponse(
-  //             status: ApiStatus.error, message: e.response?.data['message']));
-  //       }
-  //     } else {
-  //       changeState(ApiResponse(status: ApiStatus.error, message: 'Error'));
-  //     }
-  //   }
-  //   return Future.value(_productApi);
-  // }
-  // RxList<ProductApiModel> productApiList = <ProductApiModel>[].obs;
-  //Get Data from testServices to productApiList
+class ProductApiViewModel extends GetxController
+    with StateMixin<List<ProductApiModel>> {
+  var productApiList = <ProductApiModel>[].obs;
 
   @override
   void onInit() {
+    change([], status: RxStatus.loading());
     super.onInit();
-    // getProductApi();
-    // productApiList.refresh();
   }
 
-  //Get Data from testServices to productApiList
   Future<void> getProductApi() async {
+    change([], status: RxStatus.loading());
     try {
-      final res = await TestApiService.fetchProduct();
+      final res = await ProductApi.fetchProduct();
       print('Get Data Done');
       productApiList.addAll(res);
+      change(res, status: RxStatus.success());
     } catch (e) {
-      print(e);
+      if (e is DioError) {
+        if (e.response?.data != null) {
+          change([], status: RxStatus.error(e.response?.data['message']));
+        } else {
+          change([], status: RxStatus.error('Error'));
+        }
+      }
     }
   }
-
-  var productApiList = <ProductApiModel>[].obs;
 }

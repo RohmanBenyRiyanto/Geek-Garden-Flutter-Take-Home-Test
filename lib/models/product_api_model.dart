@@ -22,7 +22,6 @@ class ProductApiModel {
     id = json['id'];
     title = json['title'];
     price = json['price'] == null ? 0.0 : json['price'].toDouble();
-
     description = json['description'];
     category = json['category'];
     image = json['image'];

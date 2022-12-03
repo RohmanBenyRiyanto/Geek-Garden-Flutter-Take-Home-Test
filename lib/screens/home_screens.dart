@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_home_test/components/cards/card_our_product_empty.dart';
 import 'package:flutter_home_test/routes/routes_name.dart';
-import 'package:flutter_home_test/themes/color.dart';
-import 'package:flutter_home_test/themes/fontstyle.dart';
-import 'package:flutter_home_test/themes/margin.dart';
-import 'package:flutter_home_test/themes/responsive.dart';
+
 import 'package:flutter_home_test/view_models/product_view_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../components/cards/card_api_product.dart';
 import '../components/cards/card_our_product.dart';
+import '../utils/color.dart';
+import '../utils/fontstyle.dart';
+import '../utils/margin.dart';
+import '../utils/responsive.dart';
 import '../view_models/product_api_view_model.dart';
 
 class HomeScreen extends StatelessWidget {

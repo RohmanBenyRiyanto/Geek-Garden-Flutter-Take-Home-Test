@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../themes/color.dart';
-import '../../themes/fontstyle.dart';
-import '../../themes/margin.dart';
-import '../../themes/responsive.dart';
+import '../../utils/color.dart';
+import '../../utils/fontstyle.dart';
+import '../../utils/margin.dart';
 
 class CardApiProduct extends StatelessWidget {
   const CardApiProduct({

@@ -1,12 +1,14 @@
-// import '../../utils/services.dart';
-// import '../product_models.dart';
+import '../../services/services.dart';
+import '../product_api_model.dart';
 
-// class ProductApi {
-//   static Future<List<ProductModel>> fetchProduct() async {
-//     Services repo = Services();
-//     final response = await repo.get(url: 'products');
-//     return await Future.value(
-//       response.map<ProductModel>((e) => ProductModel.fromJson(e)).toList(),
-//     );
-//   }
-// }
+class ProductApi {
+  static Future<List<ProductApiModel>> fetchProduct() async {
+    Services repo = Services();
+    final response = await repo.get(url: 'products');
+    return await Future.value(
+      response
+          .map<ProductApiModel>((e) => ProductApiModel.fromJson(e))
+          .toList(),
+    );
+  }
+}

@@ -5,9 +5,9 @@ import 'package:flutter_home_test/view_models/update_view_model.dart';
 import 'package:get/get.dart';
 
 import '../components/buttons/button_primary.dart';
-import '../themes/color.dart';
-import '../themes/fontstyle.dart';
-import '../themes/margin.dart';
+import '../utils/color.dart';
+import '../utils/fontstyle.dart';
+import '../utils/margin.dart';
 
 class UpdateProductScreens extends StatelessWidget {
   const UpdateProductScreens({Key? key}) : super(key: key);
