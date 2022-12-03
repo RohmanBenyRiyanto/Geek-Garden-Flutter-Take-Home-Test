@@ -5,6 +5,7 @@ import '../../utils/fontstyle.dart';
 import '../../utils/margin.dart';
 import '../../utils/responsive.dart';
 
+// ignore: must_be_immutable
 class ButtonSecondary extends StatelessWidget {
   ButtonSecondary({
     Key? key,

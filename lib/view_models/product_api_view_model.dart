@@ -18,7 +18,6 @@ class ProductApiViewModel extends GetxController
     change([], status: RxStatus.loading());
     try {
       final res = await ProductApi.fetchProduct();
-      print('Get Data Done');
       productApiList.addAll(res);
       change(res, status: RxStatus.success());
     } catch (e) {

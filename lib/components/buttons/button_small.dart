@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import '../../utils/color.dart';
@@ -29,7 +31,7 @@ class ButtonSmall extends StatelessWidget {
                 horizontal: defaultHorizontal12,
                 vertical: defaultVertical6,
               ),
-              minimumSize: Size(50, 30),
+              minimumSize: const Size(50, 30),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               alignment: Alignment.centerLeft),
           child: Text(

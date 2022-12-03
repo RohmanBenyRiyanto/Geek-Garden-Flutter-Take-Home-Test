@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_home_test/models/product_models.dart';
 import 'package:flutter_home_test/utils/color.dart';
 import 'package:get/get.dart';

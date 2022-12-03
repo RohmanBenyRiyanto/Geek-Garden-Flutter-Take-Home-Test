@@ -19,7 +19,7 @@ class RoutesPages {
     ),
     GetPage(
       name: RoutesName.homeScreen,
-      page: () => HomeScreen(),
+      page: () => const HomeScreen(),
       transition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 500),
       binding: HomeBinding(),

@@ -23,10 +23,6 @@ class UpdateViewModels extends GetxController with StateMixin<List<String>> {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {
